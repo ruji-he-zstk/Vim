@@ -418,6 +418,7 @@ class Configuration implements IConfiguration {
   changeWordIncludesWhitespace = false;
 
   foldfix = false;
+  foldfixIgnoreWhenCountGreaterThanOne = false;
 
   disableExtension: boolean = false;
 

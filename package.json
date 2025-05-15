@@ -960,6 +960,11 @@
           "description": "Uses a hack to move around folds properly.",
           "default": false
         },
+        "vim.foldfixIgnoreWhenCountGreaterThanOne": {
+          "type": "boolean",
+          "description": "Ignore foldfix when count greater than one.",
+          "default": false
+        },
         "vim.mouseSelectionGoesIntoVisualMode": {
           "type": "boolean",
           "description": "If enabled, dragging with the mouse activates Visual mode.",

@@ -285,7 +285,12 @@ class MoveDown extends BaseMovement {
   keys = [['j'], ['<down>'], ['<C-j>'], ['<C-n>']];
   override preservesDesiredColumn = true;
 
-  public override async execAction(position: Position, vimState: VimState): Promise<Position> {
+  public override async execAction(
+    position: Position,
+    vimState: VimState,
+    firstIteration?: boolean,
+    lastIteration?: boolean,
+  ): Promise<Position> {
     if (
       vimState.currentMode === Mode.Insert &&
       this.keysPressed[0] === '<down>' &&
@@ -298,7 +303,10 @@ class MoveDown extends BaseMovement {
       return vimState.editor.selection.active;
     }
 
-    if (configuration.foldfix && vimState.currentMode !== Mode.VisualBlock) {
+    const ignoreFoldFix =
+      configuration.foldfixIgnoreWhenCountGreaterThanOne && !(firstIteration && lastIteration);
+
+    if (configuration.foldfix && !ignoreFoldFix && vimState.currentMode !== Mode.VisualBlock) {
       return new MoveDownFoldFix().execAction(position, vimState);
     }
 
@@ -323,7 +331,12 @@ class MoveUp extends BaseMovement {
   keys = [['k'], ['<up>'], ['<C-p>']];
   override preservesDesiredColumn = true;
 
-  public override async execAction(position: Position, vimState: VimState): Promise<Position> {
+  public override async execAction(
+    position: Position,
+    vimState: VimState,
+    firstIteration?: boolean,
+    lastIteration?: boolean,
+  ): Promise<Position> {
     if (
       vimState.currentMode === Mode.Insert &&
       this.keysPressed[0] === '<up>' &&
@@ -336,7 +349,10 @@ class MoveUp extends BaseMovement {
       return vimState.editor.selection.active;
     }
 
-    if (configuration.foldfix && vimState.currentMode !== Mode.VisualBlock) {
+    const ignoreFoldFix =
+      configuration.foldfixIgnoreWhenCountGreaterThanOne && !(firstIteration && lastIteration);
+
+    if (configuration.foldfix && !ignoreFoldFix && vimState.currentMode !== Mode.VisualBlock) {
       return new MoveUpFoldFix().execAction(position, vimState);
     }
 
